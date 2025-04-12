@@ -68,3 +68,4 @@ const calculateAlignmentScoreFlow = ai.defineFlow<
   const {output} = await prompt(input);
   return output!;
 });
+

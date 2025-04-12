@@ -1,4 +1,4 @@
-// Summarizes an article URL or summary into a concise summary.
+/** Summarizes an article URL or summary into a concise summary. */
 
 'use server';
 
