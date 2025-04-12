@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { generateLinkedInPost } from "@/ai/flows/generate-linkedin-post";
