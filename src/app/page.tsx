@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -94,7 +95,7 @@ export default function Home() {
         </Button>
 
         {linkedinPost && (
-          <Card className="shadow-md rounded-lg">
+          <Card className="shadow-md rounded-lg animate-in fade-in duration-700">
             <CardHeader>
               <CardTitle>Generated LinkedIn Post</CardTitle>
             </CardHeader>
