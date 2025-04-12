@@ -23,6 +23,7 @@ const GenerateLinkedInPostOutputSchema = z.object({
   linkedinPost: z
     .string()
     .describe('The generated LinkedIn post reflecting the client\'s philosophy.'),
+  confidenceScore: z.number().describe('The confidence score between 0 and 1.'),
 });
 export type GenerateLinkedInPostOutput = z.infer<typeof GenerateLinkedInPostOutputSchema>;
 
@@ -47,11 +48,13 @@ const prompt = ai.definePrompt({
       linkedinPost: z
         .string()
         .describe('The generated LinkedIn post reflecting the client\'s philosophy.'),
+      confidenceScore: z.number().describe('The confidence score between 0 and 1.'),
     }),
   },
   prompt: `You are an AI assistant specializing in generating LinkedIn posts for a client physician. The client's philosophy is AI as an enabler.
 
-  Generate a LinkedIn post (200-250 words) based on the following article summary and perspective statements. Ensure the post reflects the client's "AI as enabler" philosophy and incorporates the injected perspectives. Also, calculate a confidence score (0-1) indicating the alignment of the generated post with the client's views. 1 is perfectly aligned, 0 is not aligned. Output the LinkedIn post.
+  Generate a LinkedIn post (200-250 words) based on the following article summary and perspective statements. Ensure the post reflects the client's "AI as enabler" philosophy and incorporates the injected perspectives. Also, calculate a confidence score (0-1) indicating the alignment of the generated post with the client's views. 1 is perfectly aligned, 0 is not aligned. Output the LinkedIn post and confidence score as a JSON object.
+
   Article Summary: {{{articleSummary}}}
 
   Perspective Statements:
@@ -73,4 +76,3 @@ async input => {
   const {output} = await prompt(input);
   return output!;
 });
-

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -39,12 +38,7 @@ export default function Home() {
       });
 
       setLinkedinPost(postResult.linkedinPost);
-      const alignmentResult = await calculateAlignmentScore({
-        post: postResult.linkedinPost,
-        perspectives: perspectiveStatements,
-      });
-
-      setConfidenceScore(alignmentResult.score);
+      setConfidenceScore(postResult.confidenceScore);
 
       toast({
         title: "Post generated successfully!",
