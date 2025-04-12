@@ -63,7 +63,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen py-8 px-4">
+    <div className="flex flex-col items-center justify-start min-h-screen py-8 px-4 animate-in fade-in duration-700">
       <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
         AI Voice Amplified
       </h1>
@@ -72,7 +72,7 @@ export default function Home() {
       </p>
 
       <div className="w-full max-w-2xl space-y-4">
-        <Card>
+        <Card className="shadow-md rounded-lg">
           <CardHeader>
             <CardTitle>Article Information</CardTitle>
           </CardHeader>
@@ -81,23 +81,32 @@ export default function Home() {
               placeholder="Enter article URL or summary"
               value={article}
               onChange={(e) => setArticle(e.target.value)}
+              className="shadow-sm rounded-md"
             />
           </CardContent>
         </Card>
 
-        <Button disabled={isGenerating} onClick={handleGenerate} className="w-full">
+        <Button
+          disabled={isGenerating}
+          onClick={handleGenerate}
+          className="w-full shadow-md rounded-lg transition-colors duration-300 hover:bg-primary/80"
+        >
           {isGenerating ? "Generating..." : "Generate LinkedIn Post"}
         </Button>
 
         {linkedinPost && (
-          <Card>
+          <Card className="shadow-md rounded-lg">
             <CardHeader>
               <CardTitle>Generated LinkedIn Post</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Textarea readOnly value={linkedinPost} />
+              <Textarea
+                readOnly
+                value={linkedinPost}
+                className="shadow-sm rounded-md"
+              />
               <div className="flex items-center justify-between">
-                <Badge variant="secondary">
+                <Badge variant="secondary" className="shadow-sm rounded-full">
                   Confidence Score: {(confidenceScore! * 100).toFixed(2)}%
                 </Badge>
               </div>
@@ -108,4 +117,3 @@ export default function Home() {
     </div>
   );
 }
-

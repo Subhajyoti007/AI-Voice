@@ -1,6 +1,8 @@
-/** Summarizes an article URL or summary into a concise summary. */
 
 'use server';
+/**
+ * @fileOverview Summarizes an article URL or summary into a concise summary.
+ */
 
 import {ai} from '@/ai/ai-instance';
 import {z} from 'genkit';
@@ -48,3 +50,4 @@ const summarizeArticleFlow = ai.defineFlow<
     return output!;
   }
 );
+
