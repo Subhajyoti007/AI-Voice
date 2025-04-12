@@ -1,1 +1,3 @@
-// Flows will be imported for their side effects in this file.
+import '@/ai/flows/generate-linkedin-post.ts';
+import '@/ai/flows/calculate-alignment-score.ts';
+import '@/ai/flows/summarize-article.ts';
