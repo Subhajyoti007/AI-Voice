@@ -84,8 +84,43 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    /* Add a subtle gradient to the background for depth */
+    background-image: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--secondary)));
+    min-height: 100vh; /* Ensure the gradient covers the entire viewport */
+  }
+
+  /* Improve card appearance with a softer shadow and subtle background */
+  .card {
+    @apply bg-card text-card-foreground shadow-md rounded-lg;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition for hover effects */
+  }
+
+  .card:hover {
+    transform: translateY(-3px); /* Slight lift on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+  }
+
+  /* Enhance button appearance with a gradient and more pronounced shadow */
+  .button {
+    @apply bg-primary text-primary-foreground shadow-lg rounded-md transition-colors duration-300 hover:bg-primary/80;
+    background-image: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary)));
+    background-size: 200% auto;
+    transition: background-position 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+
+  .button:hover {
+    background-position: right center; /* Shift gradient on hover */
+    transform: scale(1.05); /* Slight scale up on hover */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  }
+
+  /* Improve textarea appearance with a subtle shadow */
+  textarea {
+    @apply shadow-sm rounded-md;
   }
 }
+
+
 
 
 
