@@ -27,6 +27,9 @@ async function fetchArticleContent(url: string): Promise<string> {
       if (response.status === 405) {
         throw new Error('Method Not Allowed. The server might not support fetching content from this URL.');
       }
+      if (response.status === 403) {
+        throw new Error('Forbidden. You do not have permission to access this URL.');
+      }
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const contentType = response.headers.get('content-type');
@@ -76,6 +79,9 @@ const summarizeArticleFlow = ai.defineFlow<
         if (error.message.includes('Method Not Allowed')) {
           return { summary: "I can not talk about this." };
         }
+        if (error.message.includes('Forbidden')) {
+          return { summary: "I can not talk about this." };
+        }
         throw new Error(`Failed to fetch and process article from URL: ${error.message}`);
       }
     }
@@ -94,3 +100,4 @@ const summarizeArticleFlow = ai.defineFlow<
     return output!;
   }
 );
+
