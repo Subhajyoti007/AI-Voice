@@ -24,6 +24,9 @@ async function fetchArticleContent(url: string): Promise<string> {
   try {
     const response = await fetch(url);
     if (!response.ok) {
+      if (response.status === 405) {
+        throw new Error('Method Not Allowed. The server might not support fetching content from this URL.');
+      }
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const contentType = response.headers.get('content-type');
@@ -70,6 +73,9 @@ const summarizeArticleFlow = ai.defineFlow<
       try {
         articleContent = await fetchArticleContent(input.article);
       } catch (error: any) {
+        if (error.message.includes('Method Not Allowed')) {
+          return { summary: "I can not talk about this." };
+        }
         throw new Error(`Failed to fetch and process article from URL: ${error.message}`);
       }
     }
