@@ -82,7 +82,7 @@ const summarizeArticleFlow = ai.defineFlow<
         if (error.message.includes('Forbidden')) {
           return { summary: "I can not talk about this." };
         }
-        throw new Error(`Failed to fetch and process article from URL: ${error.message}`);
+        return { summary: "I can not talk about this." };
       }
     }
 
@@ -100,4 +100,3 @@ const summarizeArticleFlow = ai.defineFlow<
     return output!;
   }
 );
-
