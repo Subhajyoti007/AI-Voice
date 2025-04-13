@@ -32,6 +32,16 @@ export default function Home() {
 
     try {
       const summaryResult = await summarizeArticle({ article });
+
+      if (summaryResult.summary === "I can not talk about this.") {
+        toast({
+          title: "I can not talk about this",
+          description: "The provided content is not related to health.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const postResult = await generateLinkedInPost({
         articleSummary: summaryResult.summary,
         perspectiveStatements: perspectiveStatements,
