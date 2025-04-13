@@ -74,6 +74,16 @@ const summarizeArticleFlow = ai.defineFlow<
       }
     }
 
+    // Check if the article content is health-related
+    const isHealthRelated = articleContent.toLowerCase().includes('health') ||
+                            articleContent.toLowerCase().includes('medical') ||
+                            articleContent.toLowerCase().includes('disease') ||
+                            articleContent.toLowerCase().includes('patient');
+
+    if (!isHealthRelated) {
+      return { summary: "I can not talk about this." };
+    }
+
     const {output} = await summarizeArticlePrompt({ article: articleContent });
     return output!;
   }
