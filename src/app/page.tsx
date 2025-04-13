@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen py-8 px-4 animate-in fade-in duration-700">
       <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
-        AI Voice Amplified
+      Perspective-Driven Content Generation
       </h1>
       <p className="text-muted-foreground text-center mb-4">
         Generate LinkedIn posts that reflect your perspective on AI in healthcare.

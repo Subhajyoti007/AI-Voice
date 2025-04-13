@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview Summarizes an article URL or summary into a concise summary.
@@ -21,11 +20,30 @@ export async function summarizeArticle(input: SummarizeArticleInput): Promise<Su
   return summarizeArticleFlow(input);
 }
 
+async function fetchArticleContent(url: string): Promise<string> {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('text/html')) {
+      throw new Error('Invalid content type. Expected text/html.');
+    }
+    const text = await response.text();
+    // Basic sanitization to remove HTML tags - consider using a more robust library like DOMPurify
+    return text.replace(/<[^>]*>/g, '');
+  } catch (error: any) {
+    console.error('Error fetching article:', error);
+    throw new Error(`Failed to fetch article content: ${error.message}`);
+  }
+}
+
 const summarizeArticlePrompt = ai.definePrompt({
   name: 'summarizeArticlePrompt',
   input: {
     schema: z.object({
-      article: z.string().describe('The URL or summary of the article to summarize.'),
+      article: z.string().describe('The text of the article to summarize.'),
     }),
   },
   output: {
@@ -33,7 +51,7 @@ const summarizeArticlePrompt = ai.definePrompt({
       summary: z.string().describe('A concise summary of the article.'),
     }),
   },
-  prompt: `Summarize the following article into a concise summary that provides context for generating a LinkedIn post:\n\n{{{article}}}`, // Ensure correct handlebars syntax.
+  prompt: `Summarize the following article into a concise summary that provides context for generating a LinkedIn post. Focus on the key points and arguments:\n\n{{{article}}}`,
 });
 
 const summarizeArticleFlow = ai.defineFlow<
@@ -46,8 +64,17 @@ const summarizeArticleFlow = ai.defineFlow<
     outputSchema: SummarizeArticleOutputSchema,
   },
   async input => {
-    const {output} = await summarizeArticlePrompt(input);
+    let articleContent = input.article;
+    // Check if the input is a URL and fetch the content
+    if (input.article.startsWith('http://') || input.article.startsWith('https://')) {
+      try {
+        articleContent = await fetchArticleContent(input.article);
+      } catch (error: any) {
+        throw new Error(`Failed to fetch and process article from URL: ${error.message}`);
+      }
+    }
+
+    const {output} = await summarizeArticlePrompt({ article: articleContent });
     return output!;
   }
 );
-
