@@ -39,6 +39,7 @@ export default function Home() {
           description: "The provided content is not related to health.",
           variant: "destructive",
         });
+        setIsGenerating(false);
         return;
       }
 
